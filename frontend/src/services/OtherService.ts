@@ -7,4 +7,5 @@ export default class OtherService {
     const uniqueCategories = new Set(categories);
     return Array.from(uniqueCategories);
   }
+
 }
