@@ -4,16 +4,20 @@ import BookReviews from '@/components/BookReviews.vue';
 
 import { BookService } from '@/services/BookService.js';
 
-import { useRoute } from 'vue-router'; 
+import { useRoute } from 'vue-router';
 
-import { formatToCOP } from '@/utils/FormatToCOP.js';
+import type { BookInterface } from '@/interfaces/BookInterface.js'; 
 
-const route = useRoute(); 
+import { onMounted, ref } from 'vue'; 
 
-const bookId = Number(route.params.id); 
 
-const book = BookService.getBookById(bookId);
+const book = ref<BookInterface | null>(null); 
 
+onMounted(async () => { 
+  const route = useRoute(); 
+  const bookId = Number(route.params.id); 
+  book.value = await BookService.getBookById(bookId); 
+}); 
 
 </script> 
 
@@ -106,7 +110,7 @@ const book = BookService.getBookById(bookId);
                 <div class="flex justify-between"> 
 
                   <span class="text-gray-600">Price:</span> 
-                  <span class="font-medium">${{ formatToCOP(book.price) }} COP</span>
+                  <span class="font-medium">${{ book.price }} COP</span>
 
                 </div> 
 
