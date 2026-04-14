@@ -3,10 +3,11 @@ import { HomeModule } from './home/home.module';
 import { TypeOrmModule } from '@nestjs/typeorm'; 
 import { BooksModule } from './books/books.module'; 
 
+
 @Module({ 
 imports: [    TypeOrmModule.forRoot({ 
       type: 'sqlite', 
-      database: 'database.sqlite', 
+      database: process.env.SQLITE_PATH ?? 'database.sqlite',
       autoLoadEntities: true, 
       synchronize: true, 
     }), HomeModule,
